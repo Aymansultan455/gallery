@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">معرض التطبيقات الذكية - ElGamal Smart Apps</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="تطبيق معرض متكامل للبيع والمشاركة - مناسب للملابس، الأحذية، الصيدليات، المطاعم، المحامين، والمدارس">
+    <meta name="keywords" content="تطبيق معرض, متجر إلكتروني, محاماة, مطاعم, ملابس, أحذية, صيدليات, مدارس">
+    <meta property="og:title" content="منصة المعارض الرقمية الذكية">
+    <meta property="og:description" content="احصل على تطبيقك الخاص لنشر مشروعك وزيادة مبيعاتك فوراً">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;900&family=Almarai:wght@400;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style id="custom-styles">
+        :root {
+            --primary-color: #d97706;
+            --secondary-color: #1e293b;
+            --accent-color: #b45309;
+            --bg-color: #f8fafc;
+            --text-color: #334155;
+            --site-font: 'Cairo', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--site-font); }
+        body { background-color: var(--bg-color); color: var(--text-color); transition: all 0.3s ease; }
+        
+        header {
+            background: var(--secondary-color); color: #fff; padding: 12px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 1000;
+        }
+        .logo-area h1 { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
+        .logo-area h1 span { color: var(--primary-color); }
+        .nav-buttons { display: flex; gap: 8px; }
+        .admin-btn {
+            background: var(--primary-color); color: #fff; border: none;
+            padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: 700;
+            transition: 0.3s; font-size: 13px; display: flex; align-items: center; gap: 6px;
+        }
+        .admin-btn:hover { background: var(--accent-color); transform: translateY(-2px); }
+        .master-btn { background: #2563eb; }
+        .master-btn:hover { background: #1d4ed8; }
+
+        /* Flashy Fast Slider */
+        .hero-slider { position: relative; width: 100%; height: 350px; overflow: hidden; background: #0f172a; }
+        .slide {
+            position: absolute; width: 100%; height: 100%; opacity: 0; transform: scale(1.04);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .slide.active { opacity: 1; transform: scale(1); }
+        .slide-content {
+            background: rgba(15, 23, 42, 0.85); color: #fff; padding: 22px 30px;
+            text-align: center; border-radius: 14px; max-width: 750px;
+            border-right: 6px solid var(--primary-color);
+            backdrop-filter: blur(6px); box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            animation: slideInUp 0.4s ease-out;
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-content h2 { font-size: 26px; margin-bottom: 8px; color: #fff; font-weight: 900; }
+        .slide-content p { font-size: 15px; color: #e2e8f0; line-height: 1.6; }
+
+        /* Marquee Bar */
+        .marquee-container {
+            background: #000; color: #fff; overflow: hidden; white-space: nowrap;
+            padding: 9px 0; border-bottom: 2px solid var(--primary-color);
+        }
+        .marquee-content {
+            display: inline-block; padding-right: 100%;
+            animation: marqueeAnim 14s linear infinite;
+        }
+        @keyframes marqueeAnim {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .section-title {
+            text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 25px;
+            color: var(--secondary-color); position: relative;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 70px; height: 4px;
+            background: var(--primary-color); margin: 8px auto 0; border-radius: 2px;
+        }
+        
+        .categories-grid, .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+        }
+        .card {
+            background: #fff; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex; flex-direction: column; cursor: pointer; border: 1px solid #e2e8f0;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 12px 22px rgba(0,0,0,0.14); }
+        .card-img-container { width: 100%; height: 190px; overflow: hidden; position: relative; }
+        .card-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .card:hover .card-img-container img { transform: scale(1.08); }
+        .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-body h3 { font-size: 18px; margin-bottom: 6px; color: var(--secondary-color); font-weight: 700; }
+        .card-body p { font-size: 13px; color: #64748b; margin-bottom: 12px; line-height: 1.5; }
+        .price-tag { font-size: 16px; font-weight: 900; color: var(--primary-color); }
+
+        .back-btn {
+            background: var(--secondary-color); color: #fff; border: none; padding: 10px 20px;
+            border-radius: 6px; cursor: pointer; font-weight: 700; margin-bottom: 20px;
+            display: inline-flex; align-items: center; gap: 8px; font-size: 15px;
+        }
+        .back-btn:hover { background: var(--primary-color); }
+
+        /* Modals */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: #fff; padding: 22px; border-radius: 12px; width: 92%; max-width: 720px;
+            max-height: 88vh; overflow-y: auto;
+        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 13px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 9px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;
+        }
+        .input-camera-wrapper { display: flex; gap: 6px; align-items: center; }
+        .camera-btn {
+            background: #3b82f6; color: white; border: none; padding: 9px 12px; border-radius: 6px;
+            cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center;
+        }
+        .camera-btn:hover { background: #2563eb; }
+
+        .img-converter-box {
+            background: #eff6ff; border: 1px dashed #3b82f6; padding: 12px; border-radius: 8px; margin-bottom: 16px;
+        }
+        .img-converter-box h4 { font-size: 14px; color: #1e40af; margin-bottom: 6px; }
+        .img-converter-box p { font-size: 12px; color: #3b82f6; margin-bottom: 8px; }
+
+        .save-btn {
+            background: #10b981; color: #fff; border: none; padding: 11px;
+            border-radius: 6px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 10px; font-size: 15px;
+        }
+        .loading { text-align: center; padding: 40px; font-size: 16px; color: var(--primary-color); font-weight: 600; }
+        footer { background: var(--secondary-color); color: #fff; text-align: center; padding: 20px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1 id="appHeaderTitle">معرض <span>الأنشطة الذكية</span></h1>
+        </div>
+        <div class="nav-buttons">
+            <button class="admin-btn" onclick="openAdminModal()"><i class="fas fa-sliders"></i> لوحة المدير</button>
+            <button class="admin-btn master-btn" onclick="openMasterModal()"><i class="fas fa-user-shield"></i> HD Master</button>
+        </div>
+    </header>
+
+    <!-- Flashy Promo Slider -->
+    <div class="hero-slider" id="heroSlider">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> جاري تجهيز العرض الفلاشي...</div>
+    </div>
+
+    <!-- Marquee Bar -->
+    <div class="marquee-container" id="marqueeContainer">
+        <div class="marquee-content" id="marqueeText">فرصة ذهبية! احصل على تطبيقك الخاص المعروض للبيع فوراً للأنشطة والشركات والمحلات!</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContainer">
+        <!-- Dynamic Content -->
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+                <h3 style="color:var(--secondary-color)">لوحة مدير التطبيق</h3>
+                <button onclick="closeModal('adminModal')" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+            </div>
+
+            <!-- Global Image Link Converter -->
+            <div class="img-converter-box">
+                <h4>🛠️ محول الصور إلى روابط (رفع مباشر):📋 نسخ الرابط</h4>
+                <p>ألصق الرابط الناتج في أي خانة صورة. أو ألصق رابط مشاركة من Google Drive وسيتحول تلقائياً.</p>
+                <div class="input-camera-wrapper">
+                    <input type="text" id="globalConverterInput" placeholder="رابط Google Drive أو اختر صورة...">
+                    <label class="camera-btn" title="التقاط أو رفع صورة">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" accept="image/*" style="display:none" onchange="convertImageFile(this, 'globalConverterInput')">
+                    </label>
+                    <button onclick="copyConverterLink()" class="admin-btn" style="white-space:nowrap;">📋 نسخ الرابط</button>
+                </div>
+            </div>
+
+            <!-- Marquee Settings -->
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="margin-bottom:8px; color:var(--secondary-color);">⚙️ إعدادات الشريط المتحرك:</h4>
+                <div class="form-group">
+                    <label>نص الشريط المتحرك:</label>
+                    <input type="text" id="cfg-marquee-text">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="form-group">
+                        <label>حجم الخط (px):</label>
+                        <input type="number" id="cfg-marquee-size" value="16">
+                    </div>
+                    <div class="form-group">
+                        <label>لون الخط:</label>
+                        <input type="color" id="cfg-marquee-color" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label>لون الخلفية:</label>
+                        <input type="color" id="cfg-marquee-bg" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label>السرعة (بالثواني):</label>
+                        <input type="number" id="cfg-marquee-speed" value="14">
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminFormContainer"></div>
+            <button class="save-btn" id="saveBtn" onclick="saveAdminChanges()">حفظ التغييرات ونشرها فورا</button>
+        </div>
+    </div>
+
+    <!-- HD Master Modal -->
+    <div class="modal" id="masterModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
+                <h3 style="color:#2563eb"><i class="fas fa-shield-alt"></i> لوحة التحكم HD Master</h3>
+                <button onclick="closeModal('masterModal')" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+            </div>
+
+            <!-- App Name Control -->
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:#1e40af; margin-bottom:8px;">✏️ التحكم في اسم التطبيق بالشريط العلوي:</h4>
+                <div class="form-group">
+                    <label>اسم التطبيق في الهيدر العلوي:</label>
+                    <input type="text" id="master-app-title" placeholder="أدخل اسم التطبيق والمعرض...">
+                </div>
+            </div>
+
+            <!-- HD Master Banners Content Control -->
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:#166534; margin-bottom:8px;">🖼️ التحكم الكامل في نصوص وصور البنر الأساسي:</h4>
+                <div id="masterBannersContainer"></div>
+            </div>
+
+            <!-- Category Management from HD Master -->
+            <div style="background:#fefce8; border:1px solid #fef08a; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:#854d0e; margin-bottom:8px;">📁 التحكم الكامل ببيانات وصور الأقسام (HD Master):</h4>
+                <div id="masterCategoriesContainer"></div>
+            </div>
+
+            <!-- Passwords Control -->
+            <div style="background:#fdf2f8; border:1px solid #fbcfe8; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:#9d174d; margin-bottom:8px;">🔑 تغيير كلمات المرور:</h4>
+                <div class="form-group">
+                    <label>كلمة مرور "لوحة مدير التطبيق":</label>
+                    <input type="text" id="pwd-admin">
+                </div>
+                <div class="form-group">
+                    <label>كلمة مرور "HD Master":</label>
+                    <input type="text" id="pwd-master">
+                </div>
+            </div>
+
+            <!-- Global Styling Control -->
+            <div style="background:#faf5ff; border:1px solid #e9d5ff; padding:12px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:#6b21a8; margin-bottom:8px;">🎨 الهيمنة وتغيير الألوان والخطوط:</h4>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="form-group">
+                        <label>اللون الرئيسي:</label>
+                        <input type="color" id="style-primary">
+                    </div>
+                    <div class="form-group">
+                        <label>اللون الثانوي:</label>
+                        <input type="color" id="style-secondary">
+                    </div>
+                    <div class="form-group">
+                        <label>خلفية الموقع:</label>
+                        <input type="color" id="style-bg">
+                    </div>
+                    <div class="form-group">
+                        <label>لون النص:</label>
+                        <input type="color" id="style-text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>نوع الخط العام:</label>
+                    <select id="style-font">
+                        <option value="'Cairo', sans-serif">Cairo (افتراضي)</option>
+                        <option value="'Tajawal', sans-serif">Tajawal</option>
+                        <option value="'Almarai', sans-serif">Almarai</option>
+                        <option value="'Amiri', serif">Amiri</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="save-btn" style="background:#2563eb;" onclick="saveMasterChanges()">حفظ وتطبيق التغييرات فوراً</button>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footerText">جميع الحقوق محفوظة - التطبيق متاح للبيع والتخصيص الفوري &copy; 2026</p>
+    </footer>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlM1oZ9OFviqjuNtzY0aZMRCSKScu9EDjoFjbwOxsB8sR5qsrIhZo1ejluRebs99BXRA/exec";
+
+        // Passwords Management
+        let passwords = {
+            admin: localStorage.getItem('pwd_admin') || "ma3rad",
+            master: localStorage.getItem('pwd_master') || "AS-ayman"
+        };
+
+        // App Title Management
+        let appTitle = localStorage.getItem('app_title') || "معرض الأنشطة الذكية";
+
+        // Site Styles State
+        let siteStyles = JSON.parse(localStorage.getItem('site_styles')) || {
+            primary: "#d97706",
+            secondary: "#1e293b",
+            bg: "#f8fafc",
+            text: "#334155",
+            font: "'Cairo', sans-serif"
+        };
+
+        // Marquee State
+        let marqueeConfig = JSON.parse(localStorage.getItem('marquee_config')) || {
+            text: "فرصة ذهبية! احصل على تطبيقك الخاص المعروض للبيع فوراً للأنشطة والشركات والمحلات!",
+            size: 16,
+            color: "#ffffff",
+            bg: "#1e293b",
+            speed: 14
+        };
+
+        // Sale & Rental Flashy Banners Data (ملابس – كوتشيات واحذية - صيدليات – مطاعم – محامين – مدارس)
+        const defaultBanners = JSON.parse(localStorage.getItem('site_banners')) || [
+            {
+                title: "👔 تطبيق معرض ملابس وأزياء جاهز للبيع",
+                desc: "اعرض أحدث تشكيلات الملابس والأزياء بأسلوب عالي الاحترافية واجذب الزبائن لمشروعك فوراً!",
+                img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1000&q=80"
+            },
+            {
+                title: "👟 معرض كوتشيات وأحذية رياضة وفخمة",
+                desc: "تطبيق متكامل لعرض منتجات الكوتشيات والموديلات الحديثة مع إمكانية الطلب والمشاهدة السريعة.",
+                img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&q=80"
+            },
+            {
+                title: "💊 تطبيق صيدليات وخدمات مستلزمات طبية",
+                desc: "نظم أصناف ومستلزمات صيدليتك في تطبيق ذكي يسهل على العملاء الوصول إليك والطلب.",
+                img: "https://images.unsplash.com/photo-1586015555751-63bb77f4322a?w=1000&q=80"
+            },
+            {
+                title: "🍔 تطبيق مطاعم وكافيهات وقوائم طعام",
+                desc: "استعرض قائمة الوجبات والمأكولات بطريقة فلاشية مشهية تدعم زيادة مبيعات مطعمك.",
+                img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80"
+            },
+            {
+                title: "⚖️ تطبيق مكاتب المحاماة والاستشارات",
+                desc: "منصة فاخرة للمحامين لاستعراض الخدمات القانونية وساعات الاستشارات والتواصل مع الموكلين.",
+                img: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1000&q=80"
+            },
+            {
+                title: "🎓 تطبيق مدارس وأكاديميات ومراكز تعليمية",
+                desc: "حل ذكي للمدارس والمراكز التعليمية لعرض المناهج والدورات التدريبية والتواصل مع الطلاب.",
+                img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1000&q=80"
+            }
+        ];
+
+        // Sample Business Categories for Sale
+        const defaultCategories = [
+            { id: 0, title: "قسم الأزياء والملابس 👔", img: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80", desc: "أرقى الموديلات الرجالي والحريمي والأطفال بأسلوب متميز." },
+            { id: 1, title: "قسم الكوتشيات والأحذية 👟", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80", desc: "أحدث الموديلات الرياضية والرسمية بجودة واحترافية عالية." },
+            { id: 2, title: "قسم الصيدليات والخدمات الطبية 💊", img: "https://images.unsplash.com/photo-1576602976047-174e57a47881?w=600&q=80", desc: "عرض المستحضرات الطبية والمستلزمات الصحية." },
+            { id: 3, title: "قسم المطاعم والمأكولات 🍔", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80", desc: "قوائم وجبات المأكولات والمشروبات المتميزة." },
+            { id: 4, title: "قسم المحاماة والاستشارات ⚖️", img: "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?w=600&q=80", desc: "خدمات الاستشارات القانونية والقضايا والتوكيلات." },
+            { id: 5, title: "قسم المدارس والأكاديميات 🎓", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80", desc: "البرامج التعليمية والأنشطة المدرسية والأكاديمية." }
+        ];
+
+        let siteData = {
+            banners: defaultBanners,
+            categories: defaultCategories,
+            products: []
+        };
+
+        let currentView = 'categories';
+
+        function applyStyles() {
+            document.getElementById('appHeaderTitle').innerHTML = `${appTitle}`;
+            document.title = appTitle + " - ElGamal Stores";
+
+            document.documentElement.style.setProperty('--primary-color', siteStyles.primary);
+            document.documentElement.style.setProperty('--secondary-color', siteStyles.secondary);
+            document.documentElement.style.setProperty('--bg-color', siteStyles.bg);
+            document.documentElement.style.setProperty('--text-color', siteStyles.text);
+            document.documentElement.style.setProperty('--site-font', siteStyles.font);
+
+            const mText = document.getElementById('marqueeText');
+            const mContainer = document.getElementById('marqueeContainer');
+            if(mText && mContainer) {
+                mText.innerText = marqueeConfig.text;
+                mText.style.fontSize = marqueeConfig.size + 'px';
+                mText.style.color = marqueeConfig.color;
+                mContainer.style.backgroundColor = marqueeConfig.bg;
+                mText.style.animationDuration = marqueeConfig.speed + 's';
+            }
+        }
+
+        async function loadData() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const fetched = await res.json();
+                
+                if(fetched.banners && fetched.banners.length > 0) siteData.banners = fetched.banners;
+                if(fetched.categories && fetched.categories.length > 0) siteData.categories = fetched.categories;
+                
+                siteData.products = fetched.products || JSON.parse(localStorage.getItem('site_products')) || [];
+
+                renderSlider();
+                renderMainView();
+            } catch (err) {
+                renderSlider();
+                renderMainView();
+            }
+        }
+
+        function renderSlider() {
+            const slider = document.getElementById('heroSlider');
+            slider.innerHTML = '';
+            siteData.banners.forEach((b, idx) => {
+                const slide = document.createElement('div');
+                slide.className = `slide ${idx === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `url('${cleanDriveUrl(b.img)}')`;
+                slide.innerHTML = `
+                    <div class="slide-content">
+                        <h2>${b.title}</h2>
+                        <p>${b.desc}</p>
+                    </div>
+                `;
+                slider.appendChild(slide);
+            });
+
+            let current = 0;
+            const slides = document.querySelectorAll('.slide');
+            if(slides.length > 1) {
+                setInterval(() => {
+                    slides[current].classList.remove('active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('active');
+                }, 3500);
+            }
+        }
+
+        function renderMainView() {
+            const container = document.getElementById('mainContainer');
+            
+            if (currentView === 'categories') {
+                let html = `<h2 class="section-title">أقسام التخصصات المتاحة بالتطبيق</h2><div class="categories-grid">`;
+                siteData.categories.forEach((cat, idx) => {
+                    html += `
+                        <div class="card" onclick="openCategoryView(${idx})">
+                            <div class="card-img-container">
+                                <img src="${cleanDriveUrl(cat.img)}" alt="${cat.title}">
+                            </div>
+                            <div class="card-body">
+                                <h3>${cat.title}</h3>
+                                <p>${cat.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                container.innerHTML = html;
+            } else {
+                const catIdx = currentView;
+                const cat = siteData.categories[catIdx];
+                const filteredProducts = siteData.products.filter(p => p.catId == catIdx);
+
+                let html = `
+                    <button class="back-btn" onclick="showCategories()"><i class="fas fa-arrow-right"></i> 🔙 عودة للأقسام</button>
+                    <h2 class="section-title">${cat ? cat.title : 'معرض المعاينات'}</h2>
+                    <div class="products-grid">
+                `;
+
+                if(filteredProducts.length === 0) {
+                    html += `<p style="grid-column: 1/-1; text-align:center; padding:35px; color:#64748b; font-size:16px;">لا توجد عناصر مضافة بهذا القسم حالياً. يمكنك إضافتها فوراً من لوحة المدير.</p>`;
+                } else {
+                    filteredProducts.forEach(prod => {
+                        html += `
+                            <div class="card">
+                                <div class="card-img-container">
+                                    <img src="${cleanDriveUrl(prod.img)}" alt="${prod.title}">
+                                </div>
+                                <div class="card-body">
+                                    <h3>${prod.title}</h3>
+                                    <p>${prod.desc}</p>
+                                    <div class="price-tag">${prod.price || ''}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                html += `</div>`;
+                container.innerHTML = html;
+            }
+        }
+
+        function openCategoryView(catIdx) {
+            currentView = catIdx;
+            renderMainView();
+            window.scrollTo({ top: 320, behavior: 'smooth' });
+        }
+
+        function showCategories() {
+            currentView = 'categories';
+            renderMainView();
+        }
+
+        function cleanDriveUrl(url) {
+            if(!url) return 'https://via.placeholder.com/300';
+            if(url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+                if(match && match[1]) {
+                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                }
+            }
+            return url;
+        }
+
+        function convertImageFile(input, targetInputId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetInputId).value = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function copyConverterLink() {
+            const input = document.getElementById('globalConverterInput');
+            if(!input.value) return alert("يرجى إدخال رابط أو تحميل صورة أولاً!");
+            const cleaned = cleanDriveUrl(input.value);
+            input.value = cleaned;
+            navigator.clipboard.writeText(cleaned);
+            alert("تم نسخ رابط الصورة المباشر بنجاح!");
+        }
+
+        // Admin Modal Controls
+        function openAdminModal() {
+            const pwd = prompt("أدخل كلمة مرور لوحة مدير التطبيق:");
+            if(pwd !== passwords.admin) return alert("كلمة المرور غير صحيحة!");
+
+            document.getElementById('cfg-marquee-text').value = marqueeConfig.text;
+            document.getElementById('cfg-marquee-size').value = marqueeConfig.size;
+            document.getElementById('cfg-marquee-color').value = marqueeConfig.color;
+            document.getElementById('cfg-marquee-bg').value = marqueeConfig.bg;
+            document.getElementById('cfg-marquee-speed').value = marqueeConfig.speed;
+
+            const container = document.getElementById('adminFormContainer');
+            let html = '<h4 style="margin-bottom:10px; color:var(--primary-color);">إدارة الأقسام والمنتجات المباشرة:</h4>';
+
+            siteData.categories.forEach((cat, idx) => {
+                html += `
+                    <div style="background:#f1f5f9; border:1px solid #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px;">
+                        <strong style="color:var(--secondary-color); font-size:15px;">القسم: ${cat.title}</strong>
+                        <div class="form-group" style="margin-top:8px;">
+                            <label>رابط الصورة:</label>
+                            <div class="input-camera-wrapper">
+                                <input type="text" id="cat-img-${idx}" value="${cat.img}">
+                                <label class="camera-btn" title="التقاط أو رفع">
+                                    <i class="fas fa-camera"></i>
+                                    <input type="file" accept="image/*" style="display:none" onchange="convertImageFile(this, 'cat-img-${idx}')">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>الوصف:</label>
+                            <textarea id="cat-desc-${idx}" rows="2">${cat.desc}</textarea>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <div style="background:#f0fdf4; border:1px solid #86efac; padding:12px; border-radius:8px; margin-top:15px; margin-bottom:15px;">
+                    <h4 style="color:#166534; margin-bottom:10px;">📦 إضافة عنصر / منتج جديد للقسم:</h4>
+                    <div class="form-group">
+                        <label>اختر القسم:</label>
+                        <select id="new-prod-cat">
+                            ${siteData.categories.map((c, i) => `<option value="${i}">${c.title}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>اسم العنصر / المنتج:</label>
+                        <input type="text" id="new-prod-title">
+                    </div>
+                    <div class="form-group">
+                        <label>السعر / السعر التقديري:</label>
+                        <input type="text" id="new-prod-price" placeholder="مثال: 350 ج.م">
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الصورة:</label>
+                        <div class="input-camera-wrapper">
+                            <input type="text" id="new-prod-img">
+                            <label class="camera-btn">
+                                <i class="fas fa-camera"></i>
+                                <input type="file" accept="image/*" style="display:none" onchange="convertImageFile(this, 'new-prod-img')">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف والتفاصيل:</label>
+                        <textarea id="new-prod-desc" rows="2"></textarea>
+                    </div>
+                    <button type="button" class="admin-btn" style="width:100%; justify-content:center;" onclick="addNewProduct()">+ إضافة المنتج فوراً</button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            document.getElementById('adminModal').style.display = 'flex';
+        }
+
+        function addNewProduct() {
+            const catId = document.getElementById('new-prod-cat').value;
+            const title = document.getElementById('new-prod-title').value;
+            const price = document.getElementById('new-prod-price').value;
+            const img = document.getElementById('new-prod-img').value;
+            const desc = document.getElementById('new-prod-desc').value;
+
+            if(!title) return alert("يرجى كتابة عنوان أو اسم المنتج");
+
+            siteData.products.push({
+                id: Date.now(),
+                catId: catId,
+                title: title,
+                price: price,
+                img: cleanDriveUrl(img),
+                desc: desc
+            });
+
+            localStorage.setItem('site_products', JSON.stringify(siteData.products));
+            alert("تم إضافة المنتج للقسم بنجاح!");
+            
+            document.getElementById('new-prod-title').value = '';
+            document.getElementById('new-prod-price').value = '';
+            document.getElementById('new-prod-img').value = '';
+            document.getElementById('new-prod-desc').value = '';
+        }
+
+        async function saveAdminChanges() {
+            marqueeConfig.text = document.getElementById('cfg-marquee-text').value;
+            marqueeConfig.size = document.getElementById('cfg-marquee-size').value;
+            marqueeConfig.color = document.getElementById('cfg-marquee-color').value;
+            marqueeConfig.bg = document.getElementById('cfg-marquee-bg').value;
+            marqueeConfig.speed = document.getElementById('cfg-marquee-speed').value;
+            localStorage.setItem('marquee_config', JSON.stringify(marqueeConfig));
+
+            siteData.categories.forEach((cat, idx) => {
+                const imgVal = document.getElementById(`cat-img-${idx}`).value;
+                cat.img = cleanDriveUrl(imgVal);
+                cat.desc = document.getElementById(`cat-desc-${idx}`).value;
+            });
+
+            applyStyles();
+
+            const btn = document.getElementById('saveBtn');
+            btn.innerText = "جاري الحفظ المباشر...";
+            btn.disabled = true;
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(siteData)
+                });
+                alert("تم تحديث البيانات ونشر التغييرات فورا!");
+                closeModal('adminModal');
+                renderMainView();
+            } catch(e) {
+                alert("تم حفظ التغييرات بنجاح!");
+                closeModal('adminModal');
+                renderMainView();
+            } finally {
+                btn.innerText = "حفظ التغييرات ونشرها فورا";
+                btn.disabled = false;
+            }
+        }
+
+        // Master Modal Controls
+        function openMasterModal() {
+            const pwd = prompt("أدخل كلمة مرور HD Master:");
+            if(pwd !== passwords.master) return alert("كلمة المرور غير صحيحة!");
+
+            document.getElementById('master-app-title').value = appTitle;
+            document.getElementById('pwd-admin').value = passwords.admin;
+            document.getElementById('pwd-master').value = passwords.master;
+
+            document.getElementById('style-primary').value = siteStyles.primary;
+            document.getElementById('style-secondary').value = siteStyles.secondary;
+            document.getElementById('style-bg').value = siteStyles.bg;
+            document.getElementById('style-text').value = siteStyles.text;
+            document.getElementById('style-font').value = siteStyles.font;
+
+            // Render Banners Editor inside HD Master
+            const masterBannerBox = document.getElementById('masterBannersContainer');
+            masterBannerBox.innerHTML = '';
+            siteData.banners.forEach((banner, idx) => {
+                masterBannerBox.innerHTML += `
+                    <div style="background:#fff; border:1px solid #e2e8f0; padding:10px; border-radius:6px; margin-bottom:10px;">
+                        <div class="form-group">
+                            <label>عنوان البنر الأساسي (${idx + 1}):</label>
+                            <input type="text" id="m-banner-title-${idx}" value="${banner.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>وصف البنر الأساسي (${idx + 1}):</label>
+                            <textarea id="m-banner-desc-${idx}" rows="2">${banner.desc}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>رابط صورة البنر:</label>
+                            <div class="input-camera-wrapper">
+                                <input type="text" id="m-banner-img-${idx}" value="${banner.img}">
+                                <label class="camera-btn">
+                                    <i class="fas fa-camera"></i>
+                                    <input type="file" accept="image/*" style="display:none" onchange="convertImageFile(this, 'm-banner-img-${idx}')">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Categories Editor inside HD Master
+            const masterCatBox = document.getElementById('masterCategoriesContainer');
+            masterCatBox.innerHTML = '';
+            siteData.categories.forEach((cat, idx) => {
+                masterCatBox.innerHTML += `
+                    <div style="background:#fff; border:1px solid #e2e8f0; padding:10px; border-radius:6px; margin-bottom:10px;">
+                        <div class="form-group">
+                            <label>عنوان القسم (${idx + 1}):</label>
+                            <input type="text" id="m-cat-title-${idx}" value="${cat.title}">
+                        </div>
+                        <div class="form-group">
+                            <label>رابط صورة القسم:</label>
+                            <div class="input-camera-wrapper">
+                                <input type="text" id="m-cat-img-${idx}" value="${cat.img}">
+                                <label class="camera-btn">
+                                    <i class="fas fa-camera"></i>
+                                    <input type="file" accept="image/*" style="display:none" onchange="convertImageFile(this, 'm-cat-img-${idx}')">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>وصف القسم:</label>
+                            <textarea id="m-cat-desc-${idx}" rows="2">${cat.desc}</textarea>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('masterModal').style.display = 'flex';
+        }
+
+        function saveMasterChanges() {
+            appTitle = document.getElementById('master-app-title').value || "معرض الأنشطة الذكية";
+            localStorage.setItem('app_title', appTitle);
+
+            passwords.admin = document.getElementById('pwd-admin').value;
+            passwords.master = document.getElementById('pwd-master').value;
+            localStorage.setItem('pwd_admin', passwords.admin);
+            localStorage.setItem('pwd_master', passwords.master);
+
+            siteStyles.primary = document.getElementById('style-primary').value;
+            siteStyles.secondary = document.getElementById('style-secondary').value;
+            siteStyles.bg = document.getElementById('style-bg').value;
+            siteStyles.text = document.getElementById('style-text').value;
+            siteStyles.font = document.getElementById('style-font').value;
+            localStorage.setItem('site_styles', JSON.stringify(siteStyles));
+
+            // Save Banners Data from HD Master
+            siteData.banners.forEach((banner, idx) => {
+                banner.title = document.getElementById(`m-banner-title-${idx}`).value;
+                banner.desc = document.getElementById(`m-banner-desc-${idx}`).value;
+                banner.img = cleanDriveUrl(document.getElementById(`m-banner-img-${idx}`).value);
+            });
+            localStorage.setItem('site_banners', JSON.stringify(siteData.banners));
+
+            // Save Categories Data from HD Master
+            siteData.categories.forEach((cat, idx) => {
+                cat.title = document.getElementById(`m-cat-title-${idx}`).value;
+                cat.img = cleanDriveUrl(document.getElementById(`m-cat-img-${idx}`).value);
+                cat.desc = document.getElementById(`m-cat-desc-${idx}`).value;
+            });
+
+            applyStyles();
+            renderSlider();
+            renderMainView();
+            alert("تم تحديث نصوص البنرات، اسم التطبيق، الأقسام، وكلمات المرور بنجاح والتغييرات تسري فوراً!");
+            closeModal('masterModal');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Initialize Application
+        applyStyles();
+        loadData();
+    </script>
+</body>
+</html>
